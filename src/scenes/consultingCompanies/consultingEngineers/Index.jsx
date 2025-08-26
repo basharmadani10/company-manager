@@ -120,7 +120,7 @@ const ConsultingEngineers = ({ consultingCompanyId }) => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb="20px">
         <Header title="Consulting Engineers" subtitle="Managing the engineers for this company" />
         {havePermission("create consulting company") && ( // Assuming same permission, adjust if needed
-          <Link to={`/ConsultingCompanies/${consultingCompanyId}/ConsultingEngineers/add`} style={{ textDecoration: 'none' }}>
+          <Link to={`/dashboard/ConsultingCompanies/${consultingCompanyId}/ConsultingEngineers/add`} style={{ textDecoration: 'none' }}>
             <Button variant="contained" sx={{ backgroundColor: colors.greenAccent[700], color: colors.primary[100], '&:hover': { backgroundColor: colors.greenAccent[800] }}} startIcon={<AddIcon />}>
               Add Engineer
             </Button>

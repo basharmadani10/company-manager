@@ -108,7 +108,7 @@ const EditProjectSale = () => {
       const response =await axios.post(`${baseUrl}${updateProjectSaleApi(saleId)}`, formData, config);
       console.log(response.data)
       snackbarRef.current.showSnackbar("Details updated successfully!", "success");
-      navigate("/sales");
+      navigate("/dashboard/sales");
     } catch (err) {
       snackbarRef.current.showSnackbar(err.response?.data?.message || "Update failed.", "error");
     } finally {

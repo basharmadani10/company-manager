@@ -339,8 +339,7 @@ const handleViewFile = async (fileUrl, fileName) => {
                         flexGrow: 1,
                       }}
                     >
-                      View
-                    </Button>
+update version                    </Button>
                     {file.type === "pdf" && (
                       <Button
                         variant="contained"

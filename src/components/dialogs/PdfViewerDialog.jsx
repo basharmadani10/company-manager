@@ -7,9 +7,7 @@ import {
   Dialog, DialogContent, DialogTitle, DialogActions, IconButton,
   Box, Typography, Button, CircularProgress, Alert
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 

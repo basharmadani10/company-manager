@@ -70,20 +70,19 @@ const Engineers = () => {
     { field: "email", headerName: "Email", flex: 1 },
     { field: "phone_number", headerName: "Phone Number", flex: 1 },
     {
-      field: "status",
+      field: "is_active",
       headerName: "Status",
       sortable: false,
       filterable: false,
       flex:0.5,
       renderCell: ({ value }) => (
         <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
-          <Button sx={{
-            fontSize: "10px",
-            color: colors.primary[100],
-            backgroundColor: value === "active" ? colors.greenAccent[600] : colors.redAccent[600],
-            "&:hover": { backgroundColor: value === "active" ? colors.greenAccent[700] : colors.redAccent[700] },
-          }}>
-            {value || "Undefined"}
+          <Button  sx={{
+                        backgroundColor: colors.greenAccent[700],
+                        color: colors.primary[100],
+                        "&:hover": { backgroundColor: colors.greenAccent[800] },
+                    }}>
+            {value ===1 ? "active" :"unactive" || "Undefined"}
           </Button>
         </Box>
       ),
@@ -137,7 +136,7 @@ const Engineers = () => {
         <Box display="flex" justifyContent="space-between" alignItems="center" mb="20px">
             <Header title="Engineers" subtitle="Managing the Engineers in the Company" />
             {havePermission("create engineers") && (
-            <Link to="/engineers/add" style={{ textDecoration: "none" }}>
+            <Link to="/dashboard/engineers/add" style={{ textDecoration: "none" }}>
                 <Button
                     variant="contained"
                     sx={{

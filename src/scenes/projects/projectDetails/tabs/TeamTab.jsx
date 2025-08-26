@@ -15,7 +15,6 @@ import DeleteConfirmationComponent from "../../../../components/DeleteConfirmati
 import { baseUrl } from "../../../../shared/baseUrl";
 import { deleteParticipantApi } from "../../../../shared/APIs";
 
-import { Link } from "react-router-dom"; // For navigation links
 
 import {
   Box,

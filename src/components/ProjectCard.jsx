@@ -95,7 +95,7 @@ const handleCardClick =() =>{
   {havePermission("details projects")&&
   setSelectedProjectId(project.id);
   console.log("selected pId:"+selectedProjectId);
-  navigate(`/projects/${project.id}`);}
+  navigate(`/dashboard/projects/${project.id}`);}
 }
   return (
     <Paper

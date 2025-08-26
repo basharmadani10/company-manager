@@ -30,6 +30,7 @@ const useProjectItemsData = ({}) => {
         
         expected_quantity: item.expected_quantity,
         // Safely access nested properties from the "items_id" object
+        id:item.id,
         name: item.items_id ? item.items_id.name : 'Not Available',
         category: item.items_id ? item.items_id.category : 'N/A',
         unit: item.items_id ? item.items_id.unit : "alll",

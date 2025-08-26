@@ -3,6 +3,7 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme, Divider } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 
+import buildProLogo from '../../assets/logo.png';
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -110,9 +111,18 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  Orient
-                </Typography>
+<Link to="/dashboard" style={{ textDecoration: 'none' }}>
+    <Box
+        component="img"
+        alt="BuildPro Logo"
+        src={buildProLogo}
+        sx={{
+            height: '25px',     // <-- تحكم في ارتفاع الشعار من هنا
+            cursor: 'pointer',
+            display: 'block'    // يضمن عدم وجود مسافات إضافية
+        }}
+    />
+</Link>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
                 </IconButton>
@@ -153,7 +163,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
           <Box flexGrow={1}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/dashboard/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -172,7 +182,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
             {havePermission("view engineers") && (
               <Item
                 title="Engineers"
-                to="/engineers"
+                to="/dashboard/engineers"
                 icon={<PeopleOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -181,7 +191,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
             {havePermission("view project managers") && (
               <Item
                 title="Project Managers"
-                to="/projectManagers"
+                to="/dashboard/projectManagers"
                 icon={<ContactsOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -191,7 +201,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
                       {havePermission("view real estate managers") && (
               <Item
                 title="Sales Managers"
-                to="/salesManagers"
+                to="/dashboard/salesManagers"
                 icon={<ContactsOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -200,7 +210,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
             {havePermission("view consulting company") && (
               <Item
                 title="Consulting Companies"
-                to="/consultingCompanies"
+                to="/dashboard/consultingCompanies"
                 icon={<RealEstateAgentSharpIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -209,7 +219,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
             {havePermission("view projects") && (
               <Item
                 title="Projects"
-                to="/projects"
+                to="/dashboard/projects"
                 icon={<BarChartOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -218,7 +228,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
             {havePermission("view owners") && (
               <Item
                 title="Owners"
-                to="/owners"
+                to="/dashboard/owners"
                 icon={<PersonOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
@@ -228,20 +238,20 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
           {havePermission("view engineers") && (
               <Item
                 title="Sales Dashboard"
-                to="/sales"
+                to="/dashboard/sales"
                 icon={<PeopleOutlinedIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
             )}
           {/* FOOTER */}
-          {!isCollapsed && (
+          {/* {!isCollapsed && (
              <Box mt="auto" p="16px" textAlign="center">
                 <Typography variant="caption" color={colors.grey[500]}>
                     v2.0.0
                 </Typography>
             </Box>
-          )}
+          )} */}
         </Menu>
       </Box>
     </Sidebar>

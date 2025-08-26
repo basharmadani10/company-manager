@@ -31,6 +31,7 @@ const useEngineersData = () => {
         };
         const response = await axios.get(`${baseUrl}${getAllEngineersApi}`, config);
         const engineersData = response.data.data;
+        console.log(engineersData);
 
         const formattedEngineers = engineersData.map((engineer) => ({
           id: engineer.id,
@@ -38,8 +39,9 @@ const useEngineersData = () => {
           last_name: engineer.user.last_name,
           email: engineer.user.email,
           phone_number: engineer.user.phone_number,
-          status: engineer.user.status,
+          is_active: engineer.user.is_active,
           specialization_name: engineer.specialization.name,
+
         }));
 
         setEngineers(formattedEngineers);

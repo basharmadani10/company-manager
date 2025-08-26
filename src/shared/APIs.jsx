@@ -16,6 +16,7 @@ export const getAllConsultingCompaniesApi="/api/consultingCompany/all";
 export const deleteConsultingCompanyApi="/api/consultingCompany/delete/";
 export const createConsultingCompanyApi="/api/consultingCompany/create";
 export const updateConsultingCompanyApi="/api/consultingCompany/update/";
+export const getConsultingCompanyDetailsApi="/api/consultingCompany/";
 
 export const getAllOwnersApi="/api/owner/all";
 export const deleteOwnerApi="/api/owner/delete/";
@@ -61,6 +62,7 @@ export const getProjectInventoryApi=(projectId)=>{return `/api/projectContainer/
 export const addItemToProjectInventoryApi=(projectId)=>{return `/api/projectContainer/${projectId}/addItemsToWarehouse`;};
 export const getprojectContainerReportsApi=(projectId)=>{return `/api/projectContainer/${projectId}/reports`;};
 export const getProjectBillsApi="/api/projectBills/";
+export const createProjectBillApi="/api/projectBills/create";
 
 
 
@@ -71,12 +73,19 @@ export const deleteTaskResourceApi= `/api/taskContainer/delete/`;
 export const createProjectSalingDetailsApi="/api/projectSalesDetails/create";
 export const getAllProjectSalingDetailsApi="/api/projectSalesDetails/all";
 export const getSingleProjectSaleApi="/api/projectSalesDetails/";
-export const deleteProjectSaleApi="/api/projectSalesDetails/delete";
+export const deleteProjectSaleApi="/api/projectSalesDetails/delete/";
 export const updateProjectSaleApi=(saleId)=>{return `/api/projectSalesDetails/update/${saleId}?_method=PUT`};
 
+export const getProjectNewsApi="/api/projectNews/all/";
+export const deleteProjectNewsApi="/api/projectNews/delete/";
+export const createProjectNewsApi="/api/projectNews/create";
+
+
 export const getProjectMediaApi="/api/projectMedia/";
-export const deleteProjectMediaApi="";
-export const addProjectMediaApi="";
+export const deleteProjectMediaApi="/api/projectMedia/delete/";
+export const addProjectMediaApi="/api/projectMedia/create";
+
+
 export const getProjectPropertyBookApi="/api/propertyBook/";
 
 

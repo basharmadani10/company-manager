@@ -124,7 +124,7 @@ const SalesManagers = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb="20px">
         <Header title="Sales Managers" subtitle="Managing the Sales Managers in the Company" />
         {havePermission("create real estate managers") && (
-          <Link to="/salesManagers/add" style={{ textDecoration: "none" }}>
+          <Link to="/dashboard/salesManagers/add" style={{ textDecoration: "none" }}>
             <Button
               variant="contained"
               sx={{

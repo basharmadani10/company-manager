@@ -28,11 +28,11 @@ const SalesDashboardPage = () => {
   const handleCardClick = (saleId) => {
     // Navigate to the detail page, passing the sale ID in the URL
     console.log(saleId);
-    navigate(`/sales/saleDetails/${saleId}`);
+    navigate(`/dashboard/sales/saleDetails/${saleId}`);
   };
 
   const handleAddProjectClick = () => {
-    navigate("/sales/add");
+    navigate("/dashboard/sales/add");
   };
   
   const scroll = (direction) => {

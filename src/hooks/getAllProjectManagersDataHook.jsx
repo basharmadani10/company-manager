@@ -30,6 +30,7 @@ const useProjectManagersData = () => {
         email: manager.user.email,
         phone_number: manager.user.phone_number,
         status: manager.user.status,
+        years_of_experience:manager.years_of_experience,
       }));
 
       setManagers(formattedManagers);

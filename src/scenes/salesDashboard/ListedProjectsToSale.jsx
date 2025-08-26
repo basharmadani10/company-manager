@@ -32,7 +32,7 @@ const ListedSalesProjects = () => {
       renderCell: ({ row }) => (
         <Box>
           <Tooltip title="Edit Sale Details">
-            <IconButton onClick={() => navigate(`/sales/${row.id}/edit`)}>
+            <IconButton onClick={() => navigate(`/dashboard/sales/${row.id}/edit`)}>
               <EditIcon />
             </IconButton>
           </Tooltip>
@@ -57,7 +57,7 @@ const ListedSalesProjects = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" mb="20px">
         <Header title="Projects for Sale" subtitle="Manage all projects currently listed for sale" />
         {havePermission("create sales listing") && (
-          <Link to="/sales/add">
+          <Link to="/dashboard/sales/add">
             <Button variant="contained" sx={{ backgroundColor: colors.greenAccent[700] }} startIcon={<AddCircleOutlineIcon />}>
               List New Project
             </Button>

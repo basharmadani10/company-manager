@@ -77,7 +77,7 @@ const ProjectsList = () => {
   });
 
   const handleAddProjectClick = () => {
-    navigate("/projects/add"); // Assuming you have a route for adding projects
+    navigate("/dashboard/projects/add"); // Assuming you have a route for adding projects
   };
 
   return (

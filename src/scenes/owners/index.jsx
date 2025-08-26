@@ -144,7 +144,7 @@ const Owners = () => {
             width="100%"
           >
             {havePermission("edit owners")&&
-            <Link to={`/owners/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/dashboard/owners/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
               <IconButton
                 aria-label="edit"
                 sx={{ color: colors.blueAccent[400], "&:hover": { color: colors.blueAccent[300] } }}
@@ -185,7 +185,7 @@ const Owners = () => {
             subtitle={"Managing the Owners that have Projects we work on in the Company"}
           />
           {havePermission("create owners")&&
-          <Link to="/Owners/add" style={{ textDecoration: "none" }}>
+          <Link to="/dashboard/owners/add" style={{ textDecoration: "none" }}>
             <Button
               variant="contained" // Use contained for a more prominent button
               sx={{
@@ -262,7 +262,7 @@ const Owners = () => {
           subtitle={"Managing the Owners that have Projects we work on in the Company"}
         />
         {havePermission("create owner")&&
-        <Link to="/Owners/add" style={{ textDecoration: "none" }}>
+        <Link to="/dashboard/owners/add" style={{ textDecoration: "none" }}>
           <Button
             variant="contained"
             sx={{

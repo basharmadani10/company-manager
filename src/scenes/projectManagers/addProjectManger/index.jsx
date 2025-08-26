@@ -129,8 +129,8 @@ const AddProjectManager = () => {
   return (
     <Box m="10px">
       <Header
-        title="Create New Engineer"
-        subtitle="Add a new engineer to the system"
+        title="Create New Project Manager"
+        subtitle="Add a new Project Manager to the system"
       ></Header>
       <Box
         sx={{

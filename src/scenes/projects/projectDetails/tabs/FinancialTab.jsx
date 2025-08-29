@@ -431,7 +431,7 @@ const FinancialTab = () => {
     if (error) return <Alert severity="error" sx={{ mt: 2 }}>Error, Please try again.</Alert>;
 
     return (
-        <Box sx={{ width: '100%', mt: 2, p: 2, backgroundColor: colors.primary[700], borderRadius: "12px" }}>
+        <Box sx={{ width: '100%', p: 2, backgroundColor: colors.primary[700], borderRadius: "12px" }}>
 
 <Header 
     title="Project Invoices" 

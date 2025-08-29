@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -14,30 +14,26 @@ import {
 import { tokens } from "../../../theme";
 
 // --- Icons ---
-import PeopleOutlineOutlined from "@mui/icons-material/PeopleOutlineOutlined";
-import BusinessIcon from "@mui/icons-material/BusinessOutlined";
-import SplitscreenIcon from "@mui/icons-material/SplitscreenOutlined";
 import DescriptionIcon from "@mui/icons-material/DescriptionOutlined";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOnOutlined";
+import BusinessIcon from "@mui/icons-material/BusinessOutlined";
+import PeopleOutlineOutlined from "@mui/icons-material/PeopleOutlineOutlined";
 import ArticleIcon from "@mui/icons-material/ArticleOutlined";
-import Inventory2Icon from '@mui/icons-material/Inventory2';
+import SplitscreenIcon from "@mui/icons-material/SplitscreenOutlined";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOnOutlined";
 
 
 import useOneProjectData from "../../../hooks/getOneProjectDataHook";
 import GeneralInfoTab from "./tabs/GeneralInfoTab";
 import ConsultingCompanyTab from "./tabs/ConsultingCompanyTab";
 import TeamTab from "./tabs/TeamTab";
-import DocumentTab from "./tabs/DocumentsTab";
-import { havePermission } from "../../../shared/Permissions";
-import ProjectStagesComponent from "./tabs/ProjectTimeLine";
-import ProjectCalendarView from "./tabs/CalendarTab";
-import ProjectGridCalendar from "./tabs/CalendarTab";
-import ProjectInventory from "./tabs/InventoryTab";
 import ResourcesTab from "./tabs/StudiesTab";
+import ProjectStagesComponent from "./tabs/ProjectTimeLine";
+import ProjectGridCalendar from "./tabs/CalendarTab";
 import ReportsTab from "./tabs/ReportsTab";
 import FinancialTab from "./tabs/FinancialTab";
+import { havePermission } from "../../../shared/Permissions";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,38 +75,74 @@ const ProjectDetails = () => {
     setValue(newValue);
   };
 
+  const allTabs = useMemo(() => {
+    if (!project) return [];
+
+    return [
+      {
+        label: "General Information",
+        icon: <DescriptionIcon />,
+        permission: "details projects",
+        component: <GeneralInfoTab project={project} />,
+      },
+      {
+        label: "Consulting Company",
+        icon: <BusinessIcon />,
+        permission: "details projects",
+        component: <ConsultingCompanyTab consultingCompany={project?.consultingCompany} />,
+      },
+      {
+        label: "Team",
+        icon: <PeopleOutlineOutlined />,
+        permission: "details projects",
+        component: <TeamTab participants={project?.participants} />,
+      },
+      {
+        label: "Studies",
+        icon: <ArticleIcon />,
+        permission: "view reports resource management",
+        component: <ResourcesTab />,
+      },
+      {
+        label: "Stages",
+        icon: <SplitscreenIcon />,
+        permission: "view stages",
+        component: <ProjectStagesComponent consultingCompanyId={project?.consultingCompany?.id} participants={project?.participants} />,
+      },
+      {
+        label: "Calendar",
+        icon: <CalendarMonthIcon />,
+        permission: "view stages",
+        component: <ProjectGridCalendar />,
+      },
+      {
+        label: "Resources",
+        icon: <Inventory2Icon />,
+        permission: "view reports resource management",
+        component: <ReportsTab />,
+      },
+    ];
+  }, [project]);
+
+  const visibleTabs = allTabs.filter(tab => havePermission(tab.permission));
+
   if (isLoading) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="80vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
         <CircularProgress />
       </Box>
     );
   }
   if (error) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="80vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
         <Alert severity="error">{error}</Alert>
       </Box>
     );
   }
   if (!project) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="80vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
         <Alert severity="info">No project data available.</Alert>
       </Box>
     );
@@ -119,19 +151,10 @@ const ProjectDetails = () => {
   return (
     <Fade in={!isLoading} timeout={800}>
       <Box m="10px">
-        {/* <Box mb={4}>
-          <Typography variant="h3" color={colors.grey[100]} fontWeight="bold">
-            Project Overview
-          </Typography>
-        </Box> */}
-
         <Box
           sx={{
             backgroundColor: colors.primary[800],
-
             borderRadius: "18px",
-            // boxShadow: `0px 10px 30px -5px ${colors.grey[900]}`,
-            // border: `1px solid ${colors.grey[700]}`,
           }}
         >
           <Box
@@ -147,168 +170,36 @@ const ProjectDetails = () => {
               value={value}
               onChange={handleChange}
               aria-label="project details tabs"
-              TabIndicatorProps={{
-                sx: { backgroundColor: colors.greenAccent[500], height: 2 },
-              }}
+              TabIndicatorProps={{ sx: { backgroundColor: colors.greenAccent[500], height: 2 } }}
               textColor="inherit"
-              variant="fullWidth"
-              // backgroundColor={colors.primary[100]}
-              sx={{
-                minHeight: "40px",
-
-                // هذا السطر يستهدف كل تبويب (Tab) داخل حاوية الـ Tabs
-                "& .MuiTab-root": {
-                  minHeight: "40px", // تأكد من تطابق هذه القيمة مع القيمة أعلاه
-                  // يمكنك تعديل حجم الخط ليتناسب مع الارتفاع الجديد
-                },
-              }}
+              variant="scrollable"
+              scrollButtons="auto"
+              allowScrollButtonsMobile
             >
-              <Tab
-                icon={<DescriptionIcon />}
-                iconPosition="start"
-                label="General Information"
-                {...a11yProps(0)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-
-              <Tab
-                icon={<BusinessIcon />}
-                iconPosition="start"
-                label="Consulting Company"
-                {...a11yProps(1)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-
-              <Tab
-                icon={<PeopleOutlineOutlined />}
-                iconPosition="start"
-                label="Team"
-                {...a11yProps(2)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-              <Tab
-                icon={<ArticleIcon />}
-                iconPosition="start"
-                label="Studies"
-                {...a11yProps(3)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-              <Tab
-                icon={<SplitscreenIcon />}
-                iconPosition="start"
-                label="Stages"
-                {...a11yProps(4)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-              <Tab
-                icon={<CalendarMonthIcon />}
-                iconPosition="start"
-                label="Calendar"
-                {...a11yProps(5)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-
-               <Tab
-                icon={<Inventory2Icon />}
-                iconPosition="start"
-                label="Reports"
-                {...a11yProps(6)}
-                sx={{
-                  color: colors.grey[300],
-                  "&.Mui-selected": {
-                    color: colors.greenAccent[300],
-                    fontWeight: "bold",
-                  },
-                }}
-              />
+              {visibleTabs.map((tab, index) => (
+                <Tab
+                  key={index}
+                  icon={tab.icon}
+                  iconPosition="start"
+                  label={tab.label}
+                  {...a11yProps(index)}
+                  sx={{
+                    color: colors.grey[300],
+                    "&.Mui-selected": {
+                      color: colors.greenAccent[300],
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
+              ))}
             </Tabs>
           </Box>
 
-          {/* Tabs */}
-
-          <TabPanel value={value} index={0}>
-            {havePermission("details projects") && (
-              <GeneralInfoTab project={project} />
-            )}
-          </TabPanel>
-
-          <TabPanel value={value} index={1}>
-            {havePermission("view project department studies") && (
-              <ConsultingCompanyTab
-                consultingCompany={project.consultingCompany}
-              />
-            )}
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            {havePermission("view project department execution") && (
-              <TeamTab
-                participants={project.participants}
-              />
-            )}
-          </TabPanel>
-
-          <TabPanel value={value} index={3}>
-            {havePermission("view reports resource management") && (
-              <ResourcesTab  />
-            )}
-          </TabPanel>
-
-          <TabPanel value={value} index={4}>
-            {havePermission("view reports resource management") && (
-              <ProjectStagesComponent
-                consultingCompanyId={project.consultingCompany.id}
-                participants={project.participants}
-              />
-            )}
-          </TabPanel>
-
-          <TabPanel value={value} index={5}>
-            {havePermission("view reports resource management") && (
-              <ProjectGridCalendar  />
-            )}
-          </TabPanel>
-        
-          <TabPanel value={value} index={6}>
-            {havePermission("view reports resource management") && (
-              <ReportsTab/>
-            )}
-          </TabPanel>
+          {visibleTabs.map((tab, index) => (
+            <TabPanel key={index} value={value} index={index}>
+              {tab.component}
+            </TabPanel>
+          ))}
         </Box>
       </Box>
     </Fade>

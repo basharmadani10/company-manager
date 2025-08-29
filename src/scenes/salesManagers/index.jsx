@@ -63,23 +63,23 @@ const SalesManagers = () => {
     { field: "last_name", headerName: "Last Name", flex: 1, cellClassName: "name-column--cell" },
     { field: "email", headerName: "Email", flex: 1 },
     { field: "phone_number", headerName: "Phone Number", flex: 1 },
-    {
-      field: "status",
-      headerName: "Status",
-      flex: 0.5,
-      renderCell: ({ value }) => (
-        <Box width="100%" display="flex" justifyContent="center" alignItems="center" height="100%">
-          <Button sx={{
-            fontSize: "10px",
-            color: colors.primary[100],
-            backgroundColor: value ? colors.greenAccent[600] : colors.redAccent[600],
-            "&:hover": { backgroundColor: value ? colors.greenAccent[700] : colors.redAccent[700] },
-          }}>
-            {value ? "Active" : "Inactive"}
-          </Button>
-        </Box>
-      ),
-    },
+    // {
+    //   field: "status",
+    //   headerName: "Status",
+    //   flex: 0.5,
+    //   renderCell: ({ value }) => (
+    //     <Box width="100%" display="flex" justifyContent="center" alignItems="center" height="100%">
+    //       <Button sx={{
+    //         fontSize: "10px",
+    //         color: colors.primary[100],
+    //         backgroundColor: value ? colors.greenAccent[600] : colors.redAccent[600],
+    //         "&:hover": { backgroundColor: value ? colors.greenAccent[700] : colors.redAccent[700] },
+    //       }}>
+    //         {value ? "Active" : "Inactive"}
+    //       </Button>
+    //     </Box>
+    //   ),
+    // },
     {
       field: "actions",
       headerName: "Actions",

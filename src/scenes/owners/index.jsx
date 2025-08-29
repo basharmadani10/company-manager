@@ -92,48 +92,13 @@ const Owners = () => {
       headerName: "Phone Number",
       flex: 1,
     },
-    {
-      field: "status",
-      headerName: "Status",
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => {
-        // Determine button color based on engineer's status
-        const statusColor =
-          params.value === "active" ? colors.greenAccent[600] : colors.redAccent[600];
 
-        return (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="100%"
-            width="100%"
-          >
-            <Button
-              sx={{
-                fontSize: "10px",
-                color: colors.primary[100], // Text color inside the button
-                backgroundColor: statusColor, // Button background color based on status
-                "&:hover": {
-                  backgroundColor:
-                    params.value === "active" ? colors.greenAccent[700] : colors.redAccent[700],
-                },
-              }}
-              onClick={() => showSnackbar(`Owner Status: ${params.value}`, "info")}
-            >
-              {params.value ? params.value : "Undefined"}
-            </Button>
-          </Box>
-        );
-      },
-    },
     {
       field: "actions",
       headerName: "Actions",
       sortable: false,
       filterable: false,
-      flex: 1, // Give more space for icons
+      flex: 0.5, // Give more space for icons
       renderCell: (params) => {
         return (
           <Box
@@ -261,7 +226,7 @@ const Owners = () => {
           title={"Owners"}
           subtitle={"Managing the Owners that have Projects we work on in the Company"}
         />
-        {havePermission("create owner")&&
+        {havePermission("create owners") &&
         <Link to="/dashboard/owners/add" style={{ textDecoration: "none" }}>
           <Button
             variant="contained"

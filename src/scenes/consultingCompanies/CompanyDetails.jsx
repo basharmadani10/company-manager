@@ -26,6 +26,7 @@ import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import CardMembershipOutlinedIcon from "@mui/icons-material/CardMembershipOutlined";
 import ConsultingEngineers from "./consultingEngineers/Index";
+import { havePermission } from "../../shared/Permissions";
 
 // Helper component for displaying information rows
 const InfoRow = ({ icon, label, value, colors }) => (
@@ -54,7 +55,7 @@ const ConsultingCompanyDetails = () => {
   const colors = tokens(theme.palette.mode);
   const { id } = useParams();
 
-  const { company, loading, error } = useConsultingCompanyDetailsData(id);
+  const { companyDetails:company, loading, error } = useConsultingCompanyDetailsData({companyId: id});
 
   if (loading) {
     return (
@@ -181,13 +182,14 @@ const ConsultingCompanyDetails = () => {
         </Grid>
 
         <Divider sx={{ my: 4, borderColor: colors.grey[700] }} />
-
+{havePermission("view consulting engineers")&&(
         <Box>
           <Typography variant="h4" color={colors.grey[200]} fontWeight={600} mb={3}>
             Assigned Engineers
           </Typography>
           <ConsultingEngineers consultingCompanyId={id} />
         </Box>
+)}
       </Paper>
     </Box>
   );

@@ -76,7 +76,9 @@ const Engineers = () => {
       filterable: false,
       flex:0.5,
       renderCell: ({ value }) => (
+         
         <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
+          {havePermission("activate user") &&(
           <Button  sx={{
                         backgroundColor: colors.greenAccent[700],
                         color: colors.primary[100],
@@ -84,6 +86,7 @@ const Engineers = () => {
                     }}>
             {value ===1 ? "active" :"unactive" || "Undefined"}
           </Button>
+          )}
         </Box>
       ),
     },

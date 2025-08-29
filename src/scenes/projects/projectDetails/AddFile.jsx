@@ -31,6 +31,8 @@ import { baseUrl } from "../../../shared/baseUrl";
 import { addProjectFileApi } from "../../../shared/APIs";
 import { getAuthToken } from "../../../shared/Permissions";
 import { useProject } from '../../../contexts/ProjectContext';
+
+
 const AddProjectFile = ({ open, onClose,  onUploadSuccess }) => {
 
   const theme = useTheme();
@@ -329,4 +331,3 @@ config
 
 export default AddProjectFile;
 
-// src/components/ProjectFilesViewer.jsx (DocumentsTab.jsx)

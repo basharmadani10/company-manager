@@ -212,14 +212,7 @@ const MaterialsReportsTab = ({}) => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-    const [selectedMaterial, setSelectedMaterial] = useState(null);
-    const [isQuantityDialogOpen, setIsQuantityDialogOpen] = useState(false);
-    const [expectedQuantity, setExpectedQuantity] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitError, setSubmitError] = useState(null);
-    const [feedback, setFeedback] = useState({ open: false, message: "", severity: "info" });
-
+    
     // --- دالة لتبديل العرض ---
     const handleViewChange = (event, newView) => {
         if (newView !== null) { // التأكد من أن المستخدم اختار قيمة
@@ -239,17 +232,12 @@ const MaterialsReportsTab = ({}) => {
             .filter((m) => selectedCategory ? m.category === selectedCategory : true);
     }, [materials, searchTerm, selectedCategory]);
     
-    // ... باقي الدوال تبقى كما هي
-    const handleOpenQuantityDialog = (material) => { setSelectedMaterial(material); setExpectedQuantity(""); setSubmitError(null); setIsQuantityDialogOpen(true); };
-    const handleCloseQuantityDialog = () => { setIsQuantityDialogOpen(false); setSelectedMaterial(null); };
-    const handleConfirmAndAddItem = async () => { /* ... Logic remains the same ... */ };
-    const handleMaterialAdded = () => { refetchMaterials(); setIsAddDialogOpen(false); };
 
     return (
         <Box sx={{ backgroundColor: colors.primary[800], borderRadius: "12px"}}>
             <Header
-                title="Project Expected Materials"
-                subtitle="Browse the materials that we would use in our project"
+                title="Project Materials Reports"
+                subtitle="Browse the quantities of materials that we used in our project"
             />
 
             <Box mt="20px">
@@ -287,19 +275,7 @@ const MaterialsReportsTab = ({}) => {
                         <ToggleButton value="table" aria-label="table view"><ViewListIcon /></ToggleButton>
                     </ToggleButtonGroup>
 
-                    <Button
-                        variant="contained"
-                        startIcon={<AddCircleOutlineIcon />}
-                        onClick={() => setIsAddDialogOpen(true)}
-                        sx={{
-                            flexShrink: 0,
-                            backgroundColor: colors.greenAccent[700],
-                            color: colors.primary[100],
-                            "&:hover": { backgroundColor: colors.greenAccent[800] },
-                        }}
-                    >
-                        Add Material
-                    </Button>
+
                 </Stack>
                 
                 {/* --- قسم عرض البيانات (إما كروت أو جدول) --- */}
@@ -326,30 +302,7 @@ const MaterialsReportsTab = ({}) => {
                         )}
                     </>
                 )}
-            </Box>
-
-            {/* --- Dialogs and Snackbar remain the same --- */}
-            {selectedMaterial && (
-                <Dialog open={isQuantityDialogOpen} onClose={handleCloseQuantityDialog}>
-                    { /* ... محتوى الديالوج يبقى كما هو ... */ }
-                </Dialog>
-            )}
-            <SelectAndAddItemDialog
-                open={isAddDialogOpen}
-                onClose={() => setIsAddDialogOpen(false)}
-                onConfirm={handleMaterialAdded}
-                existingProjectMaterials={materials}
-            />
-            <Snackbar
-                open={feedback.open}
-                autoHideDuration={6000}
-                onClose={() => setFeedback({ ...feedback, open: false })}
-                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-                <Alert onClose={() => setFeedback({ ...feedback, open: false })} severity={feedback.severity} sx={{ width: "100%" }}>
-                    {feedback.message}
-                </Alert>
-            </Snackbar>
+            </Box>  
         </Box>
     );
 };

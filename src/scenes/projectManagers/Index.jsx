@@ -101,7 +101,6 @@ const ProjectManagers = () => {
     },
   ];
   
-  // Loading and Error screens remain the same
   
   if (error) {
     // Return error UI

@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import DownloadIcon from "@mui/icons-material/Download";
+import UploadIcon from "@mui/icons-material/Upload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -33,6 +34,7 @@ import { havePermission } from "../../../../shared/Permissions";
 import { useProject } from '../../../../contexts/ProjectContext';
 import axios from "axios";
 import { PdfViewerDialog } from "../../../../components/dialogs/PdfViewerDialog";
+import UploadVersionDialog from "../../../../components/dialogs/UploadVersionDialog"; // <-- 1. Import the new dialog
 
 
 
@@ -54,19 +56,31 @@ const DocumentsTab = ({  }) => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("info");
 
-  const [openViewer, setOpenViewer] = useState(false);
-  const [currentFileUrl, setCurrentFileUrl] = useState("");
   const [currentFileName, setCurrentFileName] = useState("");
-  const [currentFileType, setCurrentFileType] = useState("");
+ 
   const [isAddFileDialogOpen, setIsAddFileDialogOpen] = useState(false); // State for the AddFileDialog
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [pdfBlob, setPdfBlob] = useState(null);
+
+  const [isUploadVersionOpen, setIsUploadVersionOpen] = useState(false);
+  const [fileToUpdate, setFileToUpdate] = useState(null);
 
   const showSnackbar = (message, severity) => {
     setSnackbarMessage(message);
     setSnackbarSeverity(severity);
     setSnackbarOpen(true);
   };
+
+  const handleOpenUploadNewerVersion = (file) => {
+    setFileToUpdate(file); // Store the entire file object
+    setIsUploadVersionOpen(true);
+  };
+
+  const handleCloseUploadNewerVersion = () => {
+    setIsUploadVersionOpen(false);
+    setFileToUpdate(null); // Clear the file on close
+  };
+
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -130,6 +144,7 @@ const handleViewFile = async (fileUrl, fileName) => {
       showSnackbar(`Failed to download: ${fileName}`, "error");
     }
   };
+
 
   const handleOpenAddFileDialog = () => {
     setIsAddFileDialogOpen(true);
@@ -339,8 +354,27 @@ const handleViewFile = async (fileUrl, fileName) => {
                         flexGrow: 1,
                       }}
                     >
-update version                    </Button>
-                    {file.type === "pdf" && (
+View
+                    </Button>
+                        
+                                              <Button
+                                                variant="contained"
+                                                startIcon={<UploadIcon />}
+                                                onClick={() =>
+                                                  handleOpenUploadNewerVersion(file)
+                                                }
+                                                sx={{
+                                                  backgroundColor: colors.grey[600],
+                                                  color: colors.primary[100],
+                                                  "&:hover": {
+                                                    backgroundColor: colors.grey[800],
+                                                  },
+                                                  flexGrow: 1,
+                                                }}
+                                              >
+                                                upload newer version
+                                              </Button>
+                    
                       <Button
                         variant="contained"
                         startIcon={<DownloadIcon />}
@@ -358,7 +392,7 @@ update version                    </Button>
                       >
                         Download
                       </Button>
-                    )}
+                      
                     {havePermission("delete reports resource management") && (
                       <DeleteConfirmationComponent
                         itemId={file.id}
@@ -383,6 +417,30 @@ update version                    </Button>
                     )}
                   </Box>
                 ) : (
+                  <Box
+                  display="flex"
+                  gap={1}
+                  flexDirection={{ xs: "column", sm: "row" }}
+                  minWidth={{ xs: "100%", sm: "auto" }}>
+
+                    <Button
+                                                  variant="contained"
+                                                  startIcon={<UploadIcon />}
+                                                  onClick={() =>
+                                                    handleOpenUploadNewerVersion(file)
+                                                  }
+                                                  sx={{
+                                                    backgroundColor: colors.grey[600],
+                                                    color: colors.primary[100],
+                                                    "&:hover": {
+                                                      backgroundColor: colors.grey[800],
+                                                    },
+                                                    flexGrow: 1,
+                                                  }}
+                                                >
+                                                  upload newer version
+                                                </Button>
+
                   <Button
                     variant="contained"
                     startIcon={<DownloadIcon />}
@@ -390,14 +448,19 @@ update version                    </Button>
                       handleDownloadFile(file.file_path, file.name)
                     }
                     sx={{
-                      backgroundColor: colors.greenAccent[600],
+                      backgroundColor: colors.greenAccent[700],
                       color: colors.primary[100],
-                      "&:hover": { backgroundColor: colors.greenAccent[700] },
-                      minWidth: { xs: "100%", sm: "auto" },
+                      "&:hover": {
+                        backgroundColor: colors.greenAccent[800],
+                      },
+                    
                     }}
                   >
                     Download
                   </Button>
+                  
+                    </Box>
+                  
                 )}
               </ListItem>
               {index < projectFiles.length - 1 && (
@@ -432,6 +495,17 @@ update version                    </Button>
               pdfFile={pdfBlob}
                 fileName={currentFileName}
             />
+
+            <UploadVersionDialog
+        open={isUploadVersionOpen}
+        onClose={handleCloseUploadNewerVersion}
+        onUploadSuccess={() => {
+          refetchFiles();
+          handleCloseUploadNewerVersion(); // Also close dialog on success
+        }}
+        originalFileId={fileToUpdate?.id}
+        originalFileName={fileToUpdate?.name}
+      />
 
       <AddProjectFile
         open={isAddFileDialogOpen}

@@ -71,6 +71,7 @@ const ConsultingEngineers = ({ consultingCompanyId }) => {
         flex: 0.5,
         renderCell: ({ row }) => (
           <Box width="100%" display="flex" justifyContent="center" alignItems="center" height="100%">
+            {havePermission("activate user") &&(
             <Button sx={{
               backgroundColor: row.status == 1 ? colors.greenAccent[600] : colors.redAccent[600],
               color: colors.grey[100],
@@ -80,6 +81,7 @@ const ConsultingEngineers = ({ consultingCompanyId }) => {
             }}>
               { row.status == 1 ?"active":"unactive"}
             </Button>
+            )}
           </Box>
         ),
       },
@@ -91,12 +93,12 @@ const ConsultingEngineers = ({ consultingCompanyId }) => {
       flex: 0.5,
       renderCell: ({ row }) => (
         <Box display="flex" justifyContent="center" alignItems="center" height="100%" width="100%">
-          {havePermission("edit consulting company") && ( // Assuming same permission, adjust if needed
+          {havePermission("edit consulting engineers") && ( // Assuming same permission, adjust if needed
             <IconButton onClick={() => handleOpenUpdateDialog(row)}  sx={{ fontSize:"small",color: colors.blueAccent[400], "&:hover": { color: colors.blueAccent[300] } }}>
               <EditIcon />
             </IconButton>
           )}
-          {havePermission("delete consulting company") && ( // Assuming same permission, adjust if needed
+          {havePermission("delete consulting engineers") && ( // Assuming same permission, adjust if needed
             <DeleteConfirmationComponent
               itemId={row.id}
               deleteApi={`${baseUrl}${deleteConsultingEngineerApi}`}
@@ -119,7 +121,7 @@ const ConsultingEngineers = ({ consultingCompanyId }) => {
     <Box m="10px">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb="20px">
         <Header title="Consulting Engineers" subtitle="Managing the engineers for this company" />
-        {havePermission("create consulting company") && ( // Assuming same permission, adjust if needed
+        {havePermission("create consulting engineers") && (
           <Link to={`/dashboard/ConsultingCompanies/${consultingCompanyId}/ConsultingEngineers/add`} style={{ textDecoration: 'none' }}>
             <Button variant="contained" sx={{ backgroundColor: colors.greenAccent[700], color: colors.primary[100], '&:hover': { backgroundColor: colors.greenAccent[800] }}} startIcon={<AddIcon />}>
               Add Engineer

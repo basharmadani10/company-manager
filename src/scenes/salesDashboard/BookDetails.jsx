@@ -19,6 +19,7 @@ import { Header } from "../../components/Header";
 // استيراد مكونات التبويبات الجديدة
 import BookInfoTab from "./bookDetailsTabs/BookInfoTab";
 import OrdersTab from "./bookDetailsTabs/OrdersTab";
+import UnitsTab from "./bookDetailsTabs/UnitsTab"; // <-- 1. استيراد المكون الجديد
 
 // مكون مساعد لعرض لوحة التبويب
 function TabPanel(props) {
@@ -42,7 +43,6 @@ function TabPanel(props) {
 
 const BookDetails = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const { bookId } = useParams();
 
   // --- State لإدارة التبويب النشط ---
@@ -100,6 +100,7 @@ const BookDetails = () => {
           >
             <Tab label="Book Info" id="tab-0" />
             <Tab label="Orders" id="tab-1" />
+            <Tab label="Units" id="tab-2" /> {/* <-- 2. إضافة التبويب الجديد */}
           </Tabs>
         </Box>
 
@@ -118,6 +119,11 @@ const BookDetails = () => {
         {/* --- عرض محتوى التبويب الثاني --- */}
         <TabPanel value={activeTab} index={1}>
           <OrdersTab bookId={bookId} />
+        </TabPanel>
+
+        {/* --- عرض محتوى التبويب الثالث --- */}
+        <TabPanel value={activeTab} index={2}> {/* <-- 3. إضافة لوحة العرض الجديدة */}
+          <UnitsTab bookId={bookId} />
         </TabPanel>
       </Box>
     </Box>

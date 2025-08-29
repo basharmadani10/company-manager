@@ -82,10 +82,9 @@ const ProjectsList = () => {
 
   return (
     <Box m="10px">
-      {/* Header and Add Project Button */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <Header title="Projects" subtitle="View and manage all registered projects" />
-        {havePermission("create projects")&&
+        {havePermission("create projects") &&
         <Button
           variant="contained"
           onClick={handleAddProjectClick}
@@ -99,7 +98,8 @@ const ProjectsList = () => {
           startIcon={<AddCircleOutlineIcon />}
         >
           Add New Project
-        </Button>}
+        </Button>
+        }
       </Box>
 
       {/* --- Filter and Search Section --- */}

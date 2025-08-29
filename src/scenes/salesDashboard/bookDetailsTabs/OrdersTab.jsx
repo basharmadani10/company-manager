@@ -32,8 +32,13 @@ import OrderCard from "../../../components/OrderCard";
 // ====================================================================
 const OrdersTab = ({ bookId }) => {
   // 2. استدعاء الـ hook لجلب البيانات
-  const { orders, loading, error } = useBookOrdersData({ bookId });
-
+  const { orders, loading, error ,refetch} = useBookOrdersData({ bookId });
+  
+  const handleActionSuccess = () => {
+    console.log("Action successful, refetching orders...");
+    refetch();
+  };
+  
   // 3. التعامل مع حالات التحميل والخطأ
   if (loading) {
     return (
@@ -49,11 +54,10 @@ const OrdersTab = ({ bookId }) => {
 
   return (
     <Box>
-      {/* 4. عرض البيانات أو رسالة عند عدم وجودها */}
       {orders && orders.length > 0 ? (
         <Stack spacing={3}>
           {orders.map((order) => (
-            <OrderCard key={order.id} order={order} />
+            <OrderCard key={order.id} order={order}   onActionSuccess={handleActionSuccess}/>
           ))}
         </Stack>
       ) : (

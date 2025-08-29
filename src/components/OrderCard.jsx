@@ -200,7 +200,8 @@ const OrderCard = ({ order, onActionSuccess }) => {
       </Stack>
 
       {/* --- Action Buttons --- */}
-{(order.status === "pending" || order.status === "payment_pending") && (
+{/* --- Action Buttons --- */}
+{(order.status === "pending" || order.status === "payment_pending" || order.status === "payment_completed") && (
   <Stack spacing={1} mt={2}>
     {error && (
       <Alert severity="error" sx={{ width: "100%" }}>
@@ -247,24 +248,26 @@ const OrderCard = ({ order, onActionSuccess }) => {
         </>
       )}
 
-      {/* Show Cancel button for BOTH 'pending' and 'payment_pending' */}
-      <Button
-        variant="outlined"
-        color="warning"
-        size="small"
-        startIcon={
-          loading.cancel ? (
-            <CircularProgress size={20} color="inherit" />
-          ) : (
-            <DoDisturbIcon />
-          )
-        }
-        disabled={Object.values(loading).some(Boolean)}
-        onClick={handleCancel}
-      >
-        Cancel
-      </Button>
-      
+      {/* Show Cancel button for 'payment_pending' OR 'payment_completed' */}
+      {/* THIS IS THE CORRECTED LINE vvv */}
+      {(order.status === "payment_pending" || order.status === "payment_completed" ) && (
+        <Button
+          variant="outlined"
+          color="warning"
+          size="small"
+          startIcon={
+            loading.cancel ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              <DoDisturbIcon />
+            )
+          }
+          disabled={Object.values(loading).some(Boolean)}
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+      )}
     </Stack>
   </Stack>
 )}

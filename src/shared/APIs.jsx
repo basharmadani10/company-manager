@@ -45,6 +45,8 @@ export const deleteProjectFileApi="/api/projectFiles/delete/";
 export const addProjectFileApi=(projectId) =>{return `/api/projectFiles/${projectId}/create`; }
 export const getProjectFilesApi=(projectId) =>{return `/api/projectFiles/${projectId}/all`; }
 
+export const uploadNewerVersionApi="/api/BackupFiles/create/";  
+
 export const createStageApi="/api/projectStage/create";
 export const deleteStageApi="/api/projectStage/delete/"
 export const getAllProjectStagesApi="/api/projectStage/";
@@ -99,6 +101,9 @@ export const getBookOrdersApi="/api/propertyUnitOrder/all/";
 export const approveOrderApi=({orderId})=>{return `/api/contract-flow/${orderId}/disicion/approve`;}
 export const rejectOrderApi=({orderId})=>{return `/api/contract-flow/${orderId}/disicion/reject`;}
 export const cancelOrderApi=({orderId})=>{return `/api/contract-flow/${orderId}/cancel`;}
+
+export const getBookUnitsApi="/api/propertyUnit/all/";
+export const getClientInstallmentsApi="/api/propertyUnit/all/";
 
 
 

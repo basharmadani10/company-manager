@@ -35,6 +35,7 @@ import SaleDetailPage from "./scenes/salesDashboard/SaleDetailPage";
 import ProjectConsultingCompanyTab from "./scenes/projects/projectDetails/tabs/ConsultingCompanyTab";
 import ConsultingCompanyDetails from "./scenes/consultingCompanies/CompanyDetails";
 import NotFound from "./scenes/NotFound";
+import BookDetails from "./scenes/salesDashboard/BookDetails";
 
 // NEW: ProtectedRoutes component
 // This component checks if a token exists in localStorage.
@@ -144,6 +145,8 @@ function App() {
                     <Route path="/dashboard/sales/edit/:id" element={<EditProjectSale />} />
                     <Route path="/dashboard/sales/saleDetails/:saleId" element={<SaleDetailPage />} />
                     <Route path="/dashboard/sales/saleDetails/:saleId/edit" element={<EditProjectSale />} />
+                    <Route path="/dashboard/sales/saleDetails/:saleId/:bookId/details" element={<BookDetails />} />
+
                   </Route>
 
                   {/* A catch-all route for 404 Not Found pages */}

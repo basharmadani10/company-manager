@@ -28,6 +28,85 @@ import { useNavigate  } from "react-router-dom";
 import { havePermission } from "../shared/Permissions";
 import { useProject } from "../contexts/ProjectContext";
 
+import React, { useState, useEffect } from 'react'; // استيراد Hooks
+// import { Box, Tooltip, Typography, useTheme } from '@mui/material';
+// import { green } from '@mui/material/colors';
+
+const EnhancedProgressBar = ({ value }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  // الخطوة 1: نستخدم state لتخزين القيمة التي ستتحرك
+  // تبدأ القيمة من صفر
+  const [animatedValue, setAnimatedValue] = useState(0);
+
+  // الخطوة 2: نستخدم useEffect لتحديث القيمة بعد تحميل المكون
+  useEffect(() => {
+    // نستخدم setTimeout لضمان أن المتصفح قد رسم المكون بعرض 0% أولاً
+    // ثم نقوم بتغيير العرض لتفعيل الأنيميشن
+    const timer = setTimeout(() => {
+      setAnimatedValue(value);
+    }, 100); // تأخير بسيط جداً (100 ميلي ثانية) لبدء الحركة
+
+    // دالة التنظيف (Cleanup function) لإلغاء الـ timer إذا تم حذف المكون
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value]); // سيعمل هذا الـ effect عند تحميل المكون أول مرة وعندما تتغير قيمة الـ value
+
+  return (
+    <Box sx={{backgroundColor:colors.primary[700]}}>
+    <Tooltip title={`اكتمل: ${value}%`}>
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: '14px',
+          // borderRadius: '10px',
+          overflow: 'hidden',
+          
+        }}
+      >
+        <Box
+          sx={{
+            // الخطوة 3: نستخدم القيمة المتحركة (animatedValue) لتحديد العرض
+            width: `${animatedValue}%`,
+            height: '100%',
+            background: `linear-gradient(45deg, ${green[300]}, ${green[800]})`,
+            // borderRadius: '10px',
+            transition: 'width 0.8s ease-in-out', // يمكن زيادة المدة قليلاً لجعل الحركة أوضح
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography
+            variant="caption"
+            sx={{
+              color: 'white',
+              fontWeight: 'bold',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.6)',
+            }}
+          >
+            {/* نعرض القيمة النهائية دائماً في النص */}
+            {value}%
+          </Typography>
+        </Box>
+      </Box>
+    </Tooltip>
+    </Box>
+  );
+};
+
+
 const ProjectCard = ({ project }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -122,7 +201,7 @@ const handleCardClick =() =>{
       <Box
         sx={{
           backgroundColor: colors.primary[700],
-          borderBottom: `1px solid ${colors.grey[700]}`,
+          // borderBottom: `1px solid ${colors.grey[700]}`,
           display: "flex",
           flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: "space-between",
@@ -145,33 +224,7 @@ const handleCardClick =() =>{
         </Box>
 
       </Box>
-      <Box
-                          display="flex"
-                          alignItems="center"
-                        >
-                          <Tooltip
-                            title={`Finished: ${project.progress_percentage}%`}
-                          >
-                            <Box
-                              sx={{
-                                display: "flex",
-                                width: { xs: '100%', sm: '400px', md: '450px' },
-                                height: "8px",
-                                // borderRadius: "4px",
-                                overflow: "hidden",
-                                backgroundColor: colors.grey[700],
-                              }}
-                            >
-                              <Box
-                                sx={{
-                                  width: `${project.progress_percentage}%`,
-                                  backgroundColor:green[500],
-                                }}
-                              />
-
-                            </Box>
-                          </Tooltip>
-                        </Box>
+       <EnhancedProgressBar value={project.progress_percentage} />
       {/* Main Content Section */}
       <Box sx={{ p: 3, backgroundColor: colors.primary[800] }}>
         {/* Description Section */}

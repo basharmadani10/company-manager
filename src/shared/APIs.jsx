@@ -86,7 +86,19 @@ export const deleteProjectMediaApi="/api/projectMedia/delete/";
 export const addProjectMediaApi="/api/projectMedia/create";
 
 
-export const getProjectPropertyBookApi="/api/propertyBook/";
+export const getProjectBooksApi="/api/propertyBook/all/";
+export const getProjectBookDetailsApi="/api/propertyBook/";
+export const createProjectBookApi="/api/propertyBook/create";
+
+export const createProjectBookBillApi="/api/propertyBookBill/create";
+export const getProjectBookBillsApi="/api/propertyBookBill/all/";
+export const deleteProjectBookBillsApi="/api/propertyBookBill/delete/";
+
+export const getBookOrdersApi="/api/propertyUnitOrder/all/";
+
+export const approveOrderApi=({orderId})=>{return `/api/contract-flow/${orderId}/disicion/approve`;}
+export const rejectOrderApi=({orderId})=>{return `/api/contract-flow/${orderId}/disicion/reject`;}
+export const cancelOrderApi=({orderId})=>{return `/api/contract-flow/${orderId}/cancel`;}
 
 
 

@@ -4,7 +4,7 @@ import { Box, IconButton, Typography, useTheme, Divider } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { tokens } from "../../theme";
 import buildProLogo from '../../assets/logo.png';
-import { havePermission } from "../../shared/Permissions";
+import { getRole, havePermission } from "../../shared/Permissions";
 
 // --- ORIGINAL ICONS ---
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -117,11 +117,8 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
           {!isCollapsed && (
             <Box mb="20px">
               <Box textAlign="center" mt="10px">
-                <Typography variant="h4" color={colors.grey[100]} fontWeight="bold">
-                  Mohamad Alraie
-                </Typography>
-                <Typography variant="h6" color={colors.greenAccent[500]}>
-                  IT Admin
+                <Typography variant="h5" color={colors.greenAccent[500]} fontWeight="bold">
+                {getRole().toUpperCase()}
                 </Typography>
               </Box>
             </Box>
@@ -131,22 +128,58 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
 
           {/* MENU ITEMS */}
           <Box flexGrow={1}>
-          {havePermission("view statistics") && (
-            <Item
-              title="Dashboard"
-              to="/dashboard/"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          )}
-            {!isCollapsed && (
-              <Typography
-                variant="h6"
-                color={colors.grey[300]}
-                sx={{ m: "15px 0 5px 20px" }}
-              >
-                Management
+                        {!isCollapsed && (
+                          <Typography
+                          variant="h6"
+                          color={colors.grey[300]}
+                          sx={{ m: "15px 0 5px 20px" }}
+                          >
+                            Management
+                          </Typography>
+                        )}
+                        {havePermission("view statistics") && (
+                          <Item
+                          title="Dashboard"
+                          to="/dashboard/"
+                          icon={<HomeOutlinedIcon />}
+                          selected={selected}
+                          setSelected={setSelected}
+                          />
+                        )}
+                        {havePermission("view projects") && (
+                          <Item
+                            title="Projects"
+                            to="/dashboard/projects"
+                            icon={<AccountTreeIcon />} // <-- CHANGED
+                            selected={selected}
+                            setSelected={setSelected}
+                          />
+                        )}
+                        {havePermission("view sales project") && (
+                          <Item
+                            title="Sales Dashboard"
+                            to="/dashboard/sales"
+                            icon={<QueryStatsIcon />} 
+                            selected={selected}
+                            setSelected={setSelected}
+                            />
+                            )}
+                            {havePermission("view consulting company") && (
+                              <Item
+                                title="Consulting Companies"
+                                to="/dashboard/ConsultingCompanies"
+                                icon={<BusinessIcon />} // <-- CHANGED
+                                selected={selected}
+                                setSelected={setSelected}
+                              />
+                            )}
+                      {!isCollapsed && (
+                        <Typography
+                        variant="h6"
+                        color={colors.grey[300]}
+                        sx={{ m: "15px 0 5px 20px" }}
+                        >
+              Employees
               </Typography>
             )}
 
@@ -177,24 +210,6 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
                 setSelected={setSelected}
               />
             )}
-            {havePermission("view consulting company") && (
-              <Item
-                title="Consulting Companies"
-                to="/dashboard/ConsultingCompanies"
-                icon={<BusinessIcon />} // <-- CHANGED
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )}
-            {havePermission("view projects") && (
-              <Item
-                title="Projects"
-                to="/dashboard/projects"
-                icon={<AccountTreeIcon />} // <-- CHANGED
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )}
             {havePermission("view owners") && (
               <Item
                 title="Owners"
@@ -202,18 +217,10 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
                 icon={<BadgeIcon />} // <-- CHANGED
                 selected={selected}
                 setSelected={setSelected}
-              />
-            )}
+                />
+                )}
           </Box>
-          {havePermission("view sales project") && ( // Assuming a permission for this dashboard
-            <Item
-              title="Sales Dashboard"
-              to="/dashboard/sales"
-              icon={<QueryStatsIcon />} // <-- CHANGED
-              selected={selected}
-              setSelected={setSelected}
-            />
-          )}
+
         </Menu>
       </Box>
     </Sidebar>

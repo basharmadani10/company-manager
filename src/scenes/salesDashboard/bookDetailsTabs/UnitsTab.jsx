@@ -1,3 +1,5 @@
+// src/pages/bookDetails/bookDetailsTabs/UnitsTab.jsx
+
 import React, { useState } from "react";
 import {
   Box,
@@ -47,20 +49,23 @@ const UnitsTab = ({ bookId }) => {
       field: "clientName",
       headerName: "Client Name",
       flex: 1,
+      // THE FIX: Use optional chaining (?.) and a fallback value (??)
       valueGetter: (params) =>
-        `${params.row.client.first_name} ${params.row.client.last_name}`,
+        `${params.row.client?.first_name ?? 'N/A'} ${params.row.client?.last_name ?? ''}`,
     },
     {
       field: "clientEmail",
       headerName: "Client Email",
       flex: 1,
-      valueGetter: (params) => params.row.client.email,
+      // THE FIX: Safely access the email
+      valueGetter: (params) => params.row.client?.email ?? 'N/A',
     },
     {
       field: "clientPhone",
       headerName: "Phone Number",
       flex: 1,
-      valueGetter: (params) => params.row.client.phone_number,
+      // THE FIX: Safely access the phone number
+      valueGetter: (params) => params.row.client?.phone_number ?? 'N/A',
     },
     {
       field: "first_payment_date",
@@ -68,7 +73,8 @@ const UnitsTab = ({ bookId }) => {
       flex: 1,
       renderCell: (params) => (
         <Typography>
-          {new Date(params.value).toLocaleDateString()}
+          {/* Add a check to ensure the date is valid before formatting */}
+          {params.value ? new Date(params.value).toLocaleDateString() : 'N/A'}
         </Typography>
       ),
     },
@@ -84,6 +90,8 @@ const UnitsTab = ({ bookId }) => {
           color="secondary"
           size="small"
           startIcon={<ReceiptLongIcon />}
+          // THE FIX: Disable the button if there is no client
+          disabled={!params.row.client}
           onClick={() =>
             handleViewInstallments(params.row.id, params.row.client.id)
           }

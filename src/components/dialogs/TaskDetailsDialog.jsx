@@ -35,7 +35,7 @@ import CloseIcon from '@mui/icons-material/Close'; // أيقونة لزر الر
 // --- API Imports ---
 import axios from "axios";
 import { baseUrl } from "../../shared/baseUrl";
-import { getAuthToken } from "../../shared/Permissions";
+import { getAuthToken, havePermission } from "../../shared/Permissions";
 import { changeTaskStatusApi, deleteTaskApi, deleteTaskResourceApi } from "../../shared/APIs";
 import useTaskResources from "../../hooks/getTaskResourcesDataHook";
 import DeleteConfirmationComponent from "../DeleteConfirmation";
@@ -240,6 +240,7 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
                 <Typography variant="h6" color={colors.grey[200]} sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: "20px" }}>
                   <InventoryIcon /> Used Resources
                 </Typography>
+                {havePermission("add item to task container")&&
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
                   onClick={() => setIsAddResourceDialogOpen(true)}
@@ -247,6 +248,7 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
                 >
                   Add Resource
                 </Button>
+}
               </Box>
               <Box sx={{ p: 1, border: `1px solid ${colors.grey[700]}`, borderRadius: '8px' }}>
                 {resourcesLoading ? (
@@ -261,6 +263,8 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
                       <ListItem
                         key={resource.id}
                         secondaryAction={
+                          <Box>
+                          {havePermission("delete item to task container")&&
                           <DeleteConfirmationComponent
                             itemId={resource.id}
                             deleteApi={`${baseUrl}${deleteTaskResourceApi}${resource.id}`}
@@ -268,6 +272,8 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
                             icon={<DeleteIcon fontSize="small" sx={{ color: colors.redAccent[500] }} />}
                             confirmationText={`Are you sure you want to remove "${resource.item.name}"?`}
                           />
+                          }
+                          </Box>
                         }
                         sx={{
                           py: 1,
@@ -306,7 +312,11 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
           </Grid>
         </DialogContent>
         <DialogActions sx={{ p: 2, borderTop: `1px solid ${colors.grey[700]}`, backgroundColor: colors.primary[800], justifyContent: 'space-between' }}>
+
           <Box sx={{ display: 'flex', gap: 1 }}>
+            
+            {havePermission("change tasks status")&&(
+              <Box>
             {nextStatusInfo && (
               <Button
                 onClick={() => handleStatusChange(nextStatusInfo.nextStatus)}
@@ -321,17 +331,8 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
                 {isStatusChanging ? 'Updating...' : nextStatusInfo.buttonText}
               </Button>
             )}
-            {task.status === 'pendingApproval' && (
-              <Button
-                onClick={handleRejectTask}
-                variant="outlined"
-                color="error"
-                disabled={isStatusChanging || isRejecting}
-                startIcon={isRejecting ? <CircularProgress size={20} color="inherit" /> : <CloseIcon />}
-              >
-                {isRejecting ? 'Rejecting...' : 'Reject Task'}
-              </Button>
-            )}
+            </Box>
+)}
           </Box>
           <Button onClick={onClose} variant="contained" sx={{ color: colors.grey[100], backgroundColor: colors.greenAccent[700], '&:hover': { backgroundColor: colors.greenAccent[800] } }}>
             Close
@@ -340,9 +341,14 @@ const TaskDetailDialog = ({ open, onClose, task: initialTask, onTaskDeleted, onT
       </Dialog>
 
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose} PaperProps={{ sx: { backgroundColor: colors.primary[700] } }}>
+        {havePermission("edit tasks")&&
         <MenuItem onClick={handleEdit}><ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>Edit</MenuItem>
+      }
+              {havePermission("delete tasks")&&
+
         <MenuItem onClick={handleDeleteClick} sx={{ color: colors.redAccent[400] }}><ListItemIcon><DeleteIcon fontSize="small" sx={{ color: colors.redAccent[400] }} /></ListItemIcon>Delete</MenuItem>
-      </Menu>
+    }
+        </Menu>
 
       <Dialog open={isDeleteDialogOpen} onClose={handleDeleteDialogClose} PaperProps={{ sx: { backgroundColor: colors.primary[800] } }}>
         <DialogTitle sx={{ color: colors.grey[100] }}>Confirm Task Deletion</DialogTitle>

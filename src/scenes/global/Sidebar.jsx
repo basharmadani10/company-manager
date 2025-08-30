@@ -205,7 +205,7 @@ const ProSidebar = ({ isCollapsed, setIsCollapsed }) => {
               />
             )}
           </Box>
-          {havePermission("view engineers") && ( // Assuming a permission for this dashboard
+          {havePermission("view sales project") && ( // Assuming a permission for this dashboard
             <Item
               title="Sales Dashboard"
               to="/dashboard/sales"

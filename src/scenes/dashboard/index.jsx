@@ -114,7 +114,7 @@ const Dashboard = () => {
           {getAuthToken()}
         </Typography>
         <Typography variant="body2" color={colors.grey[100]} fontWeight="bold">
-        "view statistics",
+           "view statistics",
             "activate user",
             "view project managers",
             "create project managers",

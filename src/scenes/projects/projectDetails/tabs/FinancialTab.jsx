@@ -45,7 +45,7 @@ import { Header } from '../../../../components/Header';
 import { baseUrl } from '../../../../shared/baseUrl';
 import { createProjectBillApi } from '../../../../shared/APIs';
 import axios from 'axios';
-import { getAuthToken } from '../../../../shared/Permissions';
+import { getAuthToken, havePermission } from '../../../../shared/Permissions';
 import { useProject } from '../../../../contexts/ProjectContext';
 
 // ====================================================================
@@ -420,9 +420,15 @@ const FinancialTab = () => {
         {
             field: 'actions', headerName: 'Actions', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
             renderCell: ({ row }) => (
+                <Box>
+                {havePermission("view details payments")&&(
+
                 <Button variant="outlined" size="small" onClick={() => handleOpenDetails(row)}>
                     Details
                 </Button>
+                
+                )}
+                </Box>
             )
         }
     ];

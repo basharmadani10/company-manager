@@ -244,7 +244,7 @@ const handleViewFile = async (fileUrl, fileName) => {
           title={"Project Files"}
           subtitle={"Managing the Files of the project"}
         />
-        {havePermission("export reports resource management") && (
+        {havePermission("upload diagrams") && (
           <Button
             variant="contained"
             onClick={handleOpenAddFileDialog}
@@ -341,6 +341,7 @@ const handleViewFile = async (fileUrl, fileName) => {
                     flexDirection={{ xs: "column", sm: "row" }}
                     minWidth={{ xs: "100%", sm: "auto" }}
                   >
+                    {havePermission("view diagrams")&&(
                     <Button
                       variant="contained"
                       startIcon={<VisibilityIcon />}
@@ -356,7 +357,8 @@ const handleViewFile = async (fileUrl, fileName) => {
                     >
 View
                     </Button>
-                        
+                    )}
+                        {havePermission("update diagrams")&&(
                                               <Button
                                                 variant="contained"
                                                 startIcon={<UploadIcon />}
@@ -374,7 +376,8 @@ View
                                               >
                                                 upload newer version
                                               </Button>
-                    
+                        )}
+                    {havePermission("download diagrams") && (
                       <Button
                         variant="contained"
                         startIcon={<DownloadIcon />}
@@ -393,7 +396,8 @@ View
                         Download
                       </Button>
                       
-                    {havePermission("delete reports resource management") && (
+                    )}
+                    {havePermission("delete diagrams") && (
                       <DeleteConfirmationComponent
                         itemId={file.id}
                         deleteApi={`${baseUrl}${deleteProjectFileApi}`}
@@ -422,7 +426,7 @@ View
                   gap={1}
                   flexDirection={{ xs: "column", sm: "row" }}
                   minWidth={{ xs: "100%", sm: "auto" }}>
-
+{havePermission("upload diagrams") &&(
                     <Button
                                                   variant="contained"
                                                   startIcon={<UploadIcon />}
@@ -440,7 +444,9 @@ View
                                                 >
                                                   upload newer version
                                                 </Button>
+)}       
 
+{havePermission("download diagrams")&&(
                   <Button
                     variant="contained"
                     startIcon={<DownloadIcon />}
@@ -458,7 +464,7 @@ View
                   >
                     Download
                   </Button>
-                  
+                  )}
                     </Box>
                   
                 )}

@@ -28,7 +28,7 @@ import useOneProjectData from "../../../hooks/getOneProjectDataHook";
 import GeneralInfoTab from "./tabs/GeneralInfoTab";
 import ConsultingCompanyTab from "./tabs/ConsultingCompanyTab";
 import TeamTab from "./tabs/TeamTab";
-import ResourcesTab from "./tabs/StudiesTab";
+import StudiesTab from "./tabs/StudiesTab";
 import ProjectStagesComponent from "./tabs/ProjectTimeLine";
 import ProjectGridCalendar from "./tabs/CalendarTab";
 import ReportsTab from "./tabs/ReportsTab";
@@ -100,8 +100,8 @@ const ProjectDetails = () => {
       {
         label: "Studies",
         icon: <ArticleIcon />,
-        permission: "view reports resource management",
-        component: <ResourcesTab />,
+        permission: "view diagrams",
+        component: <StudiesTab />,
       },
       {
         label: "Stages",
@@ -167,14 +167,20 @@ const ProjectDetails = () => {
             }}
           >
             <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="project details tabs"
-              TabIndicatorProps={{ sx: { backgroundColor: colors.greenAccent[500], height: 2 } }}
-              textColor="inherit"
-              variant="scrollable"
-              scrollButtons="auto"
-              allowScrollButtonsMobile
+               value={value}
+                             onChange={handleChange}
+                             aria-label="project details tabs"
+                             TabIndicatorProps={{
+                               sx: { backgroundColor: colors.greenAccent[500], height: 2 },
+                             }}
+                             textColor="inherit"
+                             variant="fullWidth"
+                             sx={{
+                               minHeight: "40px",
+                               "& .MuiTab-root": {
+                                 minHeight: "40px", 
+                               },
+                             }}
             >
               {visibleTabs.map((tab, index) => (
                 <Tab

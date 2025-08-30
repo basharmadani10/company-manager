@@ -112,7 +112,7 @@ const UploadVersionDialog = ({ open, onClose, onUploadSuccess, originalFileId, o
           </Box>
         </DialogContent>
         <DialogActions sx={{ backgroundColor: colors.primary[700], p: 2 }}>
-          <Button onClick={handleClose} color="secondary">Cancel</Button>
+          <Button onClick={handleClose} >Cancel</Button>
           <Button
             onClick={handleSubmit}
             variant="contained"

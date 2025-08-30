@@ -42,7 +42,7 @@ import TasksKanbanView from "../../../../components/Task";
 import AddNewStage from "../../../../components/AddStage";
 import useProjectStagesData from "../../../../hooks/getAllProjectStagesDataHook";
 import { baseUrl } from "../../../../shared/baseUrl";
-import { getAuthToken } from "../../../../shared/Permissions";
+import { getAuthToken, havePermission } from "../../../../shared/Permissions";
 import axios from "axios";
 import { deleteStageApi } from "../../../../shared/APIs";
 import AddNewTaskDialog from "../../../../components/dialogs/AddNewTaskDialog";
@@ -374,7 +374,8 @@ const ProjectStagesComponent = ({ consultingCompanyId,participants }) => {
                           </Tooltip>
                         </Box>
                       )}
-                              
+
+                      {havePermission("create tasks")&&
                       <Tooltip title="Add Task">
                         <IconButton
                           aria-label="add-task"
@@ -387,6 +388,7 @@ const ProjectStagesComponent = ({ consultingCompanyId,participants }) => {
                           <AddCircleOutlineIcon />
                         </IconButton>
                       </Tooltip>
+}
                    
                       <IconButton
                         aria-label="stage-actions"
@@ -410,7 +412,9 @@ const ProjectStagesComponent = ({ consultingCompanyId,participants }) => {
               </Accordion>
             ))}
           </Box>
+          {havePermission("create stages") &&
           <AddNewStage onStageAdded={refetchData} />
+          }
         </Box>
         <Box
           display="flex"
@@ -556,13 +560,17 @@ const ProjectStagesComponent = ({ consultingCompanyId,participants }) => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        {havePermission("edit stages")&&
+        <MenuItem onClick={handleEdit}>Edit</MenuItem>}
+        
+        {havePermission("delete stages")&&
         <MenuItem
           onClick={handleDeleteClick}
           sx={{ color: colors.redAccent[500] }}
         >
           Delete
         </MenuItem>
+}
       </Menu>
 
       <Dialog open={isDeleteDialogOpen} onClose={handleDeleteDialogClose}>

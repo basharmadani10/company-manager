@@ -11,6 +11,7 @@ import {
 import { tokens } from "../theme"; // Adjust path to your theme file
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Icon for estimated time
 import TaskDetailDialog from "./dialogs/TaskDetailsDialog";
+import { havePermission } from "../shared/Permissions";
 
 // --- The Kanban Board Component ---
 const TasksKanbanView = ({ tasks,participants,consultingCompanyId ,stageId}) => {
@@ -28,7 +29,9 @@ const TasksKanbanView = ({ tasks,participants,consultingCompanyId ,stageId}) => 
 
 
   const handleOpenDialog = (task) => {
+    {havePermission("details tasks")&&
     setSelectedTask(task);
+  }
   };
 
   const handleCloseDialog = () => {
@@ -138,6 +141,7 @@ const TasksKanbanView = ({ tasks,participants,consultingCompanyId ,stageId}) => 
                       boxShadow: `0px 0px 10px -5px ${column.color}`, // Add a subtle shadow to "lift" the card
                     },
                   }}
+                  
                   onClick={() => handleOpenDialog(task)}
                 >
                   <Box

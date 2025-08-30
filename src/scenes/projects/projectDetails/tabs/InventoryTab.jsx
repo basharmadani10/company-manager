@@ -24,6 +24,7 @@ import { useProject } from '../../../../contexts/ProjectContext';
 
 import { DataGrid } from "@mui/x-data-grid";
 import { SelectAndAddItemToInventoryDialog } from "../../../../components/dialogs/SelectItemToInventoryDialog";
+import { havePermission } from "../../../../shared/Permissions";
 
 
 // ====================================================================
@@ -181,6 +182,7 @@ const ProjectInventory = () => {
             <ToggleButton value="card" aria-label="card view"><ViewModuleIcon /></ToggleButton>
             <ToggleButton value="table" aria-label="table view"><ViewListIcon /></ToggleButton>
           </ToggleButtonGroup>
+          {havePermission("add item to inventory") && (
           <Button
             variant="contained"
             startIcon={<AddCircleOutlineIcon />}
@@ -189,6 +191,7 @@ const ProjectInventory = () => {
           >
             Add Material
           </Button>
+          )}
         </Stack>
 
         {/* --- قسم عرض البيانات (إما كروت أو جدول) --- */}
@@ -229,97 +232,4 @@ const ProjectInventory = () => {
   );
 };
 
-export default ProjectInventory;
-
-// const testCard=()=>{
-//   return(   <Card
-//     elevation={0}
-//     sx={{
-//       p: 2,
-//       backgroundColor: colors.primary[700],
-//       border: `1px solid ${colors.grey[700]}`,
-//       borderRadius: "12px",
-//       transition: "all 0.2s ease-in-out",
-//       display: 'flex',
-//       flexDirection: 'column',
-//       height: '100%',
-//       "&:hover": {
-//         cursor: "pointer",
-//         borderColor: getProgressColor(),
-//         boxShadow: `0px 4px 12px -5px ${getProgressColor()}`,
-//       },
-//     }}
-//   >
-//     <CardContent sx={{ flexGrow: 1, p: 0 }}>
-//       {/* --- HEADER SECTION --- */}
-//       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-//         <Typography variant="h5" component="div" fontWeight="bold">
-//           {item.name}
-//         </Typography>
-//         <Chip
-//           label={item.category}
-//           icon={<CategoryIcon />}
-//           size="small"
-//           sx={{ backgroundColor: colors.primary[600], color: colors.grey[100] }}
-//         />
-//       </Box>
-
-//       {/* --- PRICE INFO --- */}
-//       <InfoItem
-//         icon={<AttachMoneyIcon fontSize="small" />}
-//         text={`Unit Price: $${item.price}`}
-//       />
-
-//       {/* --- QUANTITY DETAILS SECTION --- */}
-//       <Box 
-//         sx={{ 
-//           mt: 2, 
-//           p: 1.5,
-//           backgroundColor: colors.primary[800],
-//           borderRadius: '8px',
-//           border: `1px solid ${colors.grey[800]}`
-//         }}
-//       >
-//         <Grid container spacing={1}>
-//           <Grid item xs={6}>
-//             <InfoItem icon={<InventoryIcon fontSize="small" />} text={`Available: ${item['quantity-available']}`} />
-//           </Grid>
-//           <Grid item xs={6}>
-//              <InfoItem icon={<TrackChangesIcon fontSize="small" />} text={`Required: ${item['required-quantity']}`} />
-//           </Grid>
-//         </Grid>
-//       </Box>
-
-//     </CardContent>
-    
-//     {/* --- PROGRESS BAR SECTION --- */}
-//     <Box sx={{ mt: 'auto', pt: 2 }}>
-//       <Tooltip title={`Consumed: ${item['consumed-quantity']} | Expected:  ${item['expected-quantity']}`}>
-//         <Box>
-//           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-//              <Typography variant="body2" color="text.secondary">
-//                   Consumption
-//              </Typography>
-//              <Typography variant="body2" fontWeight="bold" color={getProgressColor()}>
-//                {`${Math.round(consumedPercentage)}%`}
-//              </Typography>
-//           </Box>
-//           <LinearProgress
-//             variant="determinate"
-//             value={consumedPercentage}
-//             sx={{
-//               height: 8,
-//               borderRadius: 5,
-//               mt: 0.5,
-//               backgroundColor: colors.primary[900],
-//               '& .MuiLinearProgress-bar': {
-//                 backgroundColor: getProgressColor(),
-//               },
-//             }}
-//           />
-//         </Box>
-//       </Tooltip>
-//     </Box>
-
-//   </Card>);
-// }
+export default ProjectInventory;  

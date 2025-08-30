@@ -43,7 +43,7 @@ import { tokens } from "../../../../theme";
 import { Header } from "../../../../components/Header";
 import axios from "axios";
 import { baseUrl } from "../../../../shared/baseUrl";
-import { getAuthToken } from "../../../../shared/Permissions";
+import { getAuthToken, havePermission } from "../../../../shared/Permissions";
 import { addExistingItemToProjectContainer } from "../../../../shared/APIs";
 import { SelectAndAddItemDialog } from "../../../../components/dialogs/SelectItemDialog";
 import useProjectItemsData from "../../../../hooks/getAllProjectItemsDataHook";
@@ -262,6 +262,7 @@ const MaterialsTab = () => {
             <ToggleButton value="table" aria-label="table view"><ViewListIcon /></ToggleButton>
           </ToggleButtonGroup>
 
+         {havePermission("create new items")&& (
           <Button
             variant="contained"
             startIcon={<AddCircleOutlineIcon />}
@@ -275,6 +276,8 @@ const MaterialsTab = () => {
           >
             Add New
           </Button>
+         )} 
+
         </Stack>
         
         {loading ? (

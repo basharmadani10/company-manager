@@ -148,6 +148,7 @@ const TeamTab = ({ participants }) => {
   
 
             {/* Delete Confirmation Component */}
+            {havePermission("delete project participant") &&(
             <DeleteConfirmationComponent
               itemId={params.row.id}
               deleteApi={`${baseUrl}${deleteParticipantApi}`}
@@ -163,6 +164,7 @@ const TeamTab = ({ participants }) => {
               // You can also pass custom confirmation text if needed
               confirmationText="Are you sure you want to delete this engineer?"
             />
+        )}
         
           </Box>
         );
@@ -178,7 +180,7 @@ const TeamTab = ({ participants }) => {
           title={"Participants"}
           subtitle={"Managing the engineers participating in the project. "}
         />
-
+{havePermission("assign project participant") &&(
           <Button
             variant="contained"
             sx={{
@@ -193,7 +195,7 @@ const TeamTab = ({ participants }) => {
           >
             Add Participant
           </Button>
-
+)}
       </Box>
   
              <UserCard

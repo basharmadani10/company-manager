@@ -124,7 +124,7 @@ const ConsultingEngineers = ({ consultingCompanyId }) => {
         {havePermission("create consulting engineers") && (
           <Link to={`/dashboard/ConsultingCompanies/${consultingCompanyId}/ConsultingEngineers/add`} style={{ textDecoration: 'none' }}>
             <Button variant="contained" sx={{ backgroundColor: colors.greenAccent[700], color: colors.primary[100], '&:hover': { backgroundColor: colors.greenAccent[800] }}} startIcon={<AddIcon />}>
-              Add Engineer
+              Add Consulting Engineer
             </Button>
           </Link>
         )}

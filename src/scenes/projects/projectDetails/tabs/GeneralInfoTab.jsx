@@ -29,6 +29,7 @@ import LayersIcon from "@mui/icons-material/LayersOutlined";
 
 import UserCard from "../../../../components/UserCard";
 import EditProjectDialog from "../../../../components/dialogs/EditProjectDialog";
+import { havePermission } from "../../../../shared/Permissions";
 
 
 // A minimalist component for displaying key statistics
@@ -142,6 +143,7 @@ const GeneralInfoTab = ({ project, refetchProject }) => {
                 />
               </Box>
               <Stack direction="row" spacing={1.5} alignItems="center" pt={{ xs: 2, md: 0 }}>
+                {havePermission("edit projects")&&(
                 <Button 
                   variant="outlined" 
                   color="secondary" 
@@ -150,6 +152,7 @@ const GeneralInfoTab = ({ project, refetchProject }) => {
                 >
                   Edit
                 </Button>
+  )}
                 <Chip label={project.progress_status} sx={getProgressChipStyle(project.progress_status)} />
                 <Chip label={project.status_of_sale} sx={getStatusChipStyle(project.status_of_sale)} />
               </Stack>
